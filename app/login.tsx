@@ -4,12 +4,14 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { defaultStyles } from "@/constants/Styles";
 import Colors from "@/constants/Colors";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { isClerkAPIResponseError, useSignIn } from "@clerk/clerk-expo";
 
 enum SignInType {
   Phone,
@@ -21,10 +23,42 @@ enum SignInType {
 const Page = () => {
   const [countryCode, setCountryCode] = useState("+65");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const router = useRouter();
+  const { signIn } = useSignIn();
+
   const onSignin = async (type: SignInType) => {
     if (type == SignInType.Phone) {
+      try {
+        const fullPhoneNumber = `${countryCode}${phoneNumber}`;
+        const { supportedFirstFactors } = await signIn!.create({
+          identifier: fullPhoneNumber,
+        });
+        const firstPhoneFactor = supportedFirstFactors.find((factor) => {
+          return factor.strategy === "phone_code";
+        });
+
+        const { phoneNumberId } = firstPhoneFactor as any;
+
+        await signIn!.prepareFirstFactor({
+          strategy: "phone_code",
+          phoneNumberId,
+        });
+
+        router.push({
+          pathname: "/verify/[phone]",
+          params: { phone: fullPhoneNumber, signIn: "true" },
+        });
+      } catch (error) {
+        console.log("Error: ", JSON.stringify(error, null, 2));
+        if (isClerkAPIResponseError(error)) {
+          if (error.errors[0].code === "form_identifier_not_found") {
+            Alert.alert("Error", error.errors[0].message);
+          }
+        }
+      }
     }
   };
+
   return (
     <View style={defaultStyles.container}>
       <Text style={defaultStyles.header}>Welcome back</Text>
