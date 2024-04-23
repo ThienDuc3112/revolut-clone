@@ -46,7 +46,7 @@ const Page = () => {
 
         router.push({
           pathname: "/verify/[phone]",
-          params: { phone: fullPhoneNumber, signIn: "true" },
+          params: { phone: fullPhoneNumber, signInState: "true" },
         });
       } catch (error) {
         console.log("Error: ", JSON.stringify(error, null, 2));

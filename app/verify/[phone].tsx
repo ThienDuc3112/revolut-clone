@@ -16,9 +16,9 @@ import {
 import Colors from "@/constants/Colors";
 
 const Page = () => {
-  const { phone, signin } = useLocalSearchParams<{
+  const { phone, signInState } = useLocalSearchParams<{
     phone: string;
-    signin: string;
+    signInState: string;
   }>();
   const [code, setCode] = useState("");
   const { signIn } = useSignIn();
@@ -34,7 +34,7 @@ const Page = () => {
 
   useEffect(() => {
     if (code.length === CELL_COUNT) {
-      if (signin === "true") {
+      if (signInState === "true") {
         verifySignin();
       } else {
         verifyCode();
