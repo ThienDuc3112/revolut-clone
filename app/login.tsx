@@ -9,7 +9,7 @@ import {
 import React, { useState } from "react";
 import { defaultStyles } from "@/constants/Styles";
 import Colors from "@/constants/Colors";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { isClerkAPIResponseError, useSignIn } from "@clerk/clerk-expo";
 
@@ -71,6 +71,7 @@ const Page = () => {
           style={styles.input}
           placeholderTextColor={Colors.gray}
           value={countryCode}
+          onChangeText={setCountryCode}
         />
         <TextInput
           style={[styles.input, { flex: 1 }]}
