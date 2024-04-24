@@ -1,6 +1,6 @@
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Fragment, useEffect, useState } from "react";
-import { Link, useLocalSearchParams } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import {
   isClerkAPIResponseError,
   useSignIn,
@@ -48,6 +48,7 @@ const Page = () => {
         code,
       });
       await setActive!({ session: signUp!.createdSessionId });
+      router.navigate("/(authenticated)/(tabs)/home");
     } catch (error) {
       console.log("error", JSON.stringify(error, null, 2));
       if (isClerkAPIResponseError(error)) {
@@ -63,6 +64,7 @@ const Page = () => {
         code,
       });
       await setActive!({ session: signIn!.createdSessionId });
+      router.navigate("/(authenticated)/(tabs)/home");
     } catch (error) {
       console.log("error", JSON.stringify(error, null, 2));
       if (isClerkAPIResponseError(error)) {

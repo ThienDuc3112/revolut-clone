@@ -12,6 +12,8 @@ import { Text, TouchableOpacity } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { TokenCache } from "@clerk/clerk-expo/dist/cache";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+const queryClient = new QueryClient();
 
 const tokenCache: TokenCache = {
   async getToken(key: string) {
@@ -144,10 +146,12 @@ const RootLayoutNav = () => {
       publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!}
       tokenCache={tokenCache}
     >
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar style="light" />
-        <InitialLayout />
-      </GestureHandlerRootView>
+      <QueryClientProvider client={queryClient}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <StatusBar style="light" />
+          <InitialLayout />
+        </GestureHandlerRootView>
+      </QueryClientProvider>
     </ClerkProvider>
   );
 };
