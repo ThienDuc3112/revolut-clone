@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { Text, TouchableOpacity } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { TokenCache } from "@clerk/clerk-expo/dist/cache";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const tokenCache: TokenCache = {
   async getToken(key: string) {
@@ -143,8 +144,10 @@ const RootLayoutNav = () => {
       publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!}
       tokenCache={tokenCache}
     >
-      <StatusBar style="light" />
-      <InitialLayout />
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <StatusBar style="light" />
+        <InitialLayout />
+      </GestureHandlerRootView>
     </ClerkProvider>
   );
 };
