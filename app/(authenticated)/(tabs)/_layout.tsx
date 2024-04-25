@@ -13,7 +13,7 @@ const Layout = () => {
         tabBarBackground: () => (
           <BlurView
             experimentalBlurMethod="dimezisBlurView"
-            intensity={75}
+            intensity={60}
             style={{
               flex: 1,
               backgroundColor: "rgba(0,0,0,0.05)",
@@ -49,6 +49,8 @@ const Layout = () => {
           tabBarIcon: ({ size, color }) => (
             <FontAwesome name="bitcoin" size={size} color={color} />
           ),
+          header: () => <CustomHeader />,
+          headerTransparent: true,
         }}
       />
       <Tabs.Screen

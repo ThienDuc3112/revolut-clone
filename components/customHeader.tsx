@@ -14,7 +14,12 @@ import { Ionicons } from "@expo/vector-icons";
 const CustomHeader = () => {
   const { top } = useSafeAreaInsets();
   return (
-    <BlurView intensity={75} tint="extraLight" style={{ paddingTop: top }}>
+    <BlurView
+      intensity={60}
+      tint="extraLight"
+      style={{ paddingTop: top }}
+      experimentalBlurMethod="dimezisBlurView"
+    >
       <View style={styles.container}>
         <TouchableOpacity style={styles.roundBtn}>
           <Text style={{ color: "white", fontWeight: "500", fontSize: 16 }}>
