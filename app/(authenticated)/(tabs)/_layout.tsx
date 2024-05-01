@@ -9,6 +9,7 @@ const Layout = () => {
   return (
     <Tabs
       screenOptions={{
+        lazy: false,
         tabBarActiveTintColor: Colors.primary,
         tabBarBackground: () => (
           <BlurView
